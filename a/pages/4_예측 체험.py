@@ -14,7 +14,7 @@ from pages.__func__.function import classify_risk
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
-API_KEY_PATH = os.getenv('API_KEY')
+
 
 # 페이지 설정
 st.set_page_config(layout="wide")
@@ -155,29 +155,33 @@ def home_page():
             st.session_state.page = 'survey'
 
 def detect_text(image_bytes):
-    # API키 값 위치 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
-    client = vision.ImageAnnotatorClient()
+    # 하드코딩된 API 키 파일 경로
+    API_KEY_PATH = 'C:/Users/1104_6/OneDrive/바탕 화면/새 폴더/lithe-record-434508-a5-375deb43aa45.json'
 
-    # 이미지 객체 생성
-    image = vision.Image(content=image_bytes)
-    
-    # 텍스트 감지 요청
-    response = client.text_detection(image=image)
-    texts = response.text_annotations
-    
-    # 추출된 텍스트를 하나의 문자열로 합침
-    full_text = ' '.join([text.description for text in texts])
-    st.write(full_text)
+    try:
+        # API키 값 위치 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
+        client = vision.ImageAnnotatorClient()
 
-    # 텍스트 파싱
-    parsed_data = parse_medical_report(full_text)
+        # 이미지 객체 생성
+        image = vision.Image(content=image_bytes)
+        
+        # 텍스트 감지 요청
+        response = client.text_detection(image=image)
+        texts = response.text_annotations
+        
+        # 추출된 텍스트를 하나의 문자열로 합침
+        full_text = ' '.join([text.description for text in texts])
+        st.write(full_text)
     
-    return parsed_data
-
-except Exception as e:
-    st.error(f'An error occurred: {str(e)}')
-    return None
+        # 텍스트 파싱
+        parsed_data = parse_medical_report(full_text)
+        
+        return parsed_data
+    
+    except Exception as e:
+        st.error(f'An error occurred: {str(e)}')
+        return None
 
 def parse_medical_report(text):
     result = {}
