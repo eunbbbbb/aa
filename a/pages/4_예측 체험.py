@@ -164,6 +164,11 @@ def detect_text(image_bytes):
     
     # API_KEY_PATH를 API_KEY로 설정
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
+    if API_KEY is None:
+        raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
+
+    print(f"API_KEY: {API_KEY}")
+    print(f"API_KEY_PATH: {API_KEY_PATH}")
     # Vision API 클라이언트 생성
     client = vision.ImageAnnotatorClient()
 
