@@ -156,12 +156,9 @@ def home_page():
             st.session_state.page = 'survey'
 
 def detect_text(image_bytes):
-    # .env 파일 로드 (로컬 환경에서 사용 시)
-    load_dotenv()
-    
-    # 환경 변수에서 API_KEY 가져오기
-    API_KEY = os.getenv("API_KEY")
-    
+    # Streamlit Secrets에서 API_KEY 가져오기
+    API_KEY = st.secrets["API_KEY"]
+
     # API_KEY가 None인지 확인
     if API_KEY is None:
         raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
