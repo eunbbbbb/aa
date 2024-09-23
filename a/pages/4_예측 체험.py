@@ -156,19 +156,21 @@ def home_page():
             st.session_state.page = 'survey'
 
 def detect_text(image_bytes):
-   # .env 파일 로드 (로컬 환경에서 사용 시)
+    # .env 파일 로드 (로컬 환경에서 사용 시)
     load_dotenv()
     
     # 환경 변수에서 API_KEY 가져오기
     API_KEY = os.getenv("API_KEY")
     
-    # API_KEY_PATH를 API_KEY로 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
+    # API_KEY가 None인지 확인
     if API_KEY is None:
         raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
 
+    # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
+
     print(f"API_KEY: {API_KEY}")
-    print(f"API_KEY_PATH: {API_KEY_PATH}")
+    
     # Vision API 클라이언트 생성
     client = vision.ImageAnnotatorClient()
 
@@ -184,7 +186,7 @@ def detect_text(image_bytes):
     st.write(full_text)
 
     # 텍스트 파싱
-    parsed_data = parse_medical_report(full_text)
+    parsed_data = parse_medical_report(full_text
     
     return parsed_data
 
