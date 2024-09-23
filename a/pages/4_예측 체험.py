@@ -158,7 +158,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # .env 파일 로드
-    API_KEY = st.secrets["API_KEY"]
+    API_KEY = st.secrets["general"]['private_key']
     
     # API_KEY가 None인지 확인
     if API_KEY is None:
