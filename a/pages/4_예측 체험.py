@@ -153,8 +153,9 @@ def home_page():
         if st.button('설문조사 시작하기'):
             st.session_state.page = 'survey'
 
-API_KEY_PATH = os.getenv('API_KEY')
 def detect_text(image_bytes):
+    API_KEY_PATH = os.getenv('API_KEY')
+    
     # API키 값 위치 설정
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
     client = vision.ImageAnnotatorClient()
