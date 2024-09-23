@@ -83,12 +83,12 @@ def home_page():
     if uploaded_files:
         all_parsed_data = []
         
-       for uploaded_file in uploaded_files:
+        for uploaded_file in uploaded_files:
             image_bytes = uploaded_file.read()  # 파일을 바이트 형식으로 변환
             if isinstance(image_bytes, bytes):  # 바이트 형식인지 확인
                 parsed_data = detect_text(image_bytes)
-        else:
-            st.error("Uploaded file is not in bytes format.")
+            else:
+                st.error("Uploaded file is not in bytes format.")
             
             if parsed_data:  # 텍스트가 추출된 경우 
                 # 숫자값을 float로 변환
