@@ -80,7 +80,7 @@ def home_page():
     uploaded_files = st.file_uploader("이미지 최대 2장까지 업로드 가능", type=["jpg", "jpeg", "png", "tif", "tiff"], accept_multiple_files=True)
     
     st.markdown(' ')
-    if uploaded_files is not None:
+    if uploaded_files:
         all_parsed_data = []
         
         for uploaded_file in uploaded_files:
