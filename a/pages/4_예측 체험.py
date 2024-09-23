@@ -181,7 +181,7 @@ def detect_text(image_bytes):
             json.dump(secrets, temp_file)
             temp_file.flush()  # 파일을 flush하여 데이터가 실제로 기록되게
 
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
             
             # Vision API 클라이언트 생성
             client = vision.ImageAnnotatorClient()
