@@ -12,7 +12,7 @@ from pages.__func__.function import remove_outliers
 st.set_page_config(layout="wide")
 
 # 데이터 로드
-data = joblib.load(r'C:\Users\1104_6\Desktop\[고은비]\[고은비]\[공공데이터 분석및 AI챗봇 과정]\팀프로젝트 3차 대시보드\대시보드\pages\__func__\10년치데이터.pkl')
+data = joblib.load('__func__/10년치데이터.pkl')
 # 시스템에서 사용할 수 있는 한글 폰트 설정
 plt.rcParams['font.family'] = 'NanumGothic'
 
@@ -26,7 +26,7 @@ with tab1: # 국건영 소개
     st.subheader('이 조사는 보통 보건복지부와 질병관리청, 그리고 관련 연구 기관들이 협력하여 진행합니다.')
 
     with con1:
-        st.image('C:/Users/1104_6/Desktop/[고은비]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/국건영.png', caption='출처: 질병관리청')
+        st.image('__func__/국건영.png', caption='출처: 질병관리청')
     with con2:
         st.header(':pill: 국민 건강 영양 조사란?')
         with st.expander(" ",expanded=True):
