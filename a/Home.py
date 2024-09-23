@@ -50,4 +50,4 @@ with empty3:
     st.write('')
 
 with con4:
-    st.image('C:/Users/1104_6/Desktop/[고은비]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/다운로드.png', caption='출처 : GC녹십자아이메드')
+    st.image(''data/다운로드.png', caption='출처 : GC녹십자아이메드')
