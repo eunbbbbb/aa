@@ -11,14 +11,14 @@ from pages.__func__.function import split_and_convert_data, get_clf_eval, plot_r
 
 
 # 모델 불러오기
-model_total = joblib.load('C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/pred.pkl')
-model_nonsampling = joblib.load("C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/pred_nonsampling.pkl")
+model_total = joblib.load('__func__/pred.pkl')
+model_nonsampling = joblib.load("__func__/pred_nonsampling.pkl")
 
 # CSV 파일에서 데이터 로드
-X = pd.read_csv('C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/X.csv')
-y = pd.read_csv('C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/y.csv')
-X_nonsampling = pd.read_csv("C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/X_nonsampling.csv")
-y_nonsampling = pd.read_csv("C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/y_nonsampling.csv")
+X = pd.read_csv('__func__/X.csv')
+y = pd.read_csv('__func__/y.csv')
+X_nonsampling = pd.read_csv("__func__/X_nonsampling.csv")
+y_nonsampling = pd.read_csv("__func__/y_nonsampling.csv")
 
 
 # 페이지 설정
@@ -32,19 +32,19 @@ with con1:
 
     with tab3:
         st.subheader(':small_blue_diamond: 사용 기술 및 개발 환경')
-        st.image('C:/Users/1104_6/Desktop/[고은비]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/자료.png')
+        st.image('__func__/자료.png')
 
     with tab1:
         st.subheader(':small_blue_diamond: 이상치 제거 : 3-sigma')
         with st.expander("Details",expanded=True):
-            st.image('C:/Users/1104_6/Desktop/[고은비]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/이상치.png', width=600)
+            st.image('__func__/이상치.png', width=600)
             st.write('''
                      - 3시그마(3-sigma) 방법은 데이터에서 이상치를 탐지하고 제거하는 데 사용되는 간단한 통계적 방법입니다
                      - 이 방법은 데이터가 정규분포를 따른다고 가정할 때, **평균과 표준편차를 기준**으로 이상치를 식별합니다
                         ''')
         st.subheader(':small_blue_diamond: 샘플링 : UnderSambling')
         with st.expander("Details",expanded=True):
-            st.image('C:/Users/1104_6/Desktop/[고은비]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/언더샘플링.png', width=600)
+            st.image('__func__/언더샘플링.png', width=600)
             st.write('''
                      - Under-sampling은 데이터의 불균형 문제를 해결하기 위한 기법으로, 주로 클래스 불균형이 있는 데이터셋에서 사용됩니다
                      - **클래스 불균형 해소**: 모델이 다수 클래스를 주로 학습하여 소수 클래스의 예측 성능이 낮아질 수 있어, 언더 샘플링은 이러한 불균형을 완화하기 위해 사용됩니다
