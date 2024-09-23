@@ -155,6 +155,7 @@ def home_page():
         if st.button('설문조사 시작하기'):
             st.session_state.page = 'survey'
 
+
 def detect_text(image_bytes):
     # Streamlit Secrets에서 API_KEY 가져오기
     API_KEY = st.secrets["API_KEY"]
@@ -163,18 +164,18 @@ def detect_text(image_bytes):
     if API_KEY is None:
         raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
 
-    # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
-
-    print(f"API_KEY: {API_KEY}")
+     try:
+        # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
     
-    # Vision API 클라이언트 생성
-    client = vision.ImageAnnotatorClient()
-
-    # 이미지 객체 생성
-    image = vision.Image(content=image_bytes)
+        print(f"API_KEY: {API_KEY}")
+        
+        # Vision API 클라이언트 생성
+        client = vision.ImageAnnotatorClient()
     
-    try:
+        # 이미지 객체 생성
+        image = vision.Image(content=image_bytes)
+        
         # 텍스트 감지 요청
         response = client.text_detection(image=image)
         texts = response.text_annotations
@@ -191,6 +192,7 @@ def detect_text(image_bytes):
     except Exception as e:
         st.error(f"Error detecting text: {e}")
         return None
+
 
 def parse_medical_report(text):
     result = {}
@@ -229,7 +231,6 @@ def survey_page():
 def display_survey(existing_data):
     st.title(':pill: 건강 상태 조사')
     st.write('추가적인 자료를 필요로 하여 설문지에 응해 주시면 감사하겠습니다.')
-
 
     with st.form('survey_form'):
         form_elements = []
