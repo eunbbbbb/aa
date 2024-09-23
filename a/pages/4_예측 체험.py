@@ -157,8 +157,11 @@ def home_page():
 
 
 def detect_text(image_bytes):
-    # Streamlit Secrets에서 API_KEY 가져오기
-    API_KEY = st.secrets["API_KEY"]
+    # .env 파일 로드
+    load_dotenv()
+    
+    # API_KEY 환경 변수에서 가져오기
+    API_KEY = os.getenv("API_KEY")
 
     # API_KEY가 None인지 확인
     if API_KEY is None:
