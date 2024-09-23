@@ -160,17 +160,17 @@ def home_page():
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
     secrets = {
-        "type"= st.secrets["general"]["type"],
-        "project_id"= st.secrets["general"]["project_id"],
-        "private_key_id"= st.secrets["general"]["private_key_id"],
-        "private_key"= st.secrets["general"]["private_key"],
-        "client_email"= st.secrets["general"]["client_email"],
-        "client_id"= st.secrets["general"]["client_id"],
-        "auth_uri"= st.secrets["general"]["auth_uri"],
-        "token_uri"= st.secrets["general"]["token_uri"],
-        "auth_provider_x509_cert_url"= st.secrets["general"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url"= st.secrets["general"]["client_x509_cert_url"],
-        "universe_domain"= st.secrets["general"]["universe_domain"]
+        "type"== st.secrets["general"]["type"],
+        "project_id"== st.secrets["general"]["project_id"],
+        "private_key_id"== st.secrets["general"]["private_key_id"],
+        "private_key"== st.secrets["general"]["private_key"],
+        "client_email"== st.secrets["general"]["client_email"],
+        "client_id"== st.secrets["general"]["client_id"],
+        "auth_uri"== st.secrets["general"]["auth_uri"],
+        "token_uri"== st.secrets["general"]["token_uri"],
+        "auth_provider_x509_cert_url"== st.secrets["general"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url"== st.secrets["general"]["client_x509_cert_url"],
+        "universe_domain"== st.secrets["general"]["universe_domain"]
     }
 
     # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
