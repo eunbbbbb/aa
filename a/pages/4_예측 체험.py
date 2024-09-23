@@ -160,45 +160,48 @@ def home_page():
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
     secrets = {
-        "type"== st.secrets["general"]["type"],
-        "project_id"== st.secrets["general"]["project_id"],
-        "private_key_id"== st.secrets["general"]["private_key_id"],
-        "private_key"== st.secrets["general"]["private_key"],
-        "client_email"== st.secrets["general"]["client_email"],
-        "client_id"== st.secrets["general"]["client_id"],
-        "auth_uri"== st.secrets["general"]["auth_uri"],
-        "token_uri"== st.secrets["general"]["token_uri"],
-        "auth_provider_x509_cert_url"== st.secrets["general"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url"== st.secrets["general"]["client_x509_cert_url"],
-        "universe_domain"== st.secrets["general"]["universe_domain"]
+        "type": st.secrets["general"]["type"],
+        "project_id": st.secrets["general"]["project_id"],
+        "private_key_id": st.secrets["general"]["private_key_id"],
+        "private_key": st.secrets["general"]["private_key"],
+        "client_email": st.secrets["general"]["client_email"],
+        "client_id": st.secrets["general"]["client_id"],
+        "auth_uri": st.secrets["general"]["auth_uri"],
+        "token_uri": st.secrets["general"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["general"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["general"]["client_x509_cert_url"],
+        "universe_domain": st.secrets["general"]["universe_domain"]
     }
 
-    # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
+    # GOOGLE_APPLICATION_CREDENTIALS 파일 경로를 임시 파일로 저장
+    with tempfile.NamedTemporaryFile(delete=True) as temp_file:
+        json.dump(secrets, temp_file)
+        temp_file.flush()  # 파일을 flush하여 데이터가 실제로 기록되게 함
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
 
-    try: 
-        # Vision API 클라이언트 생성
-        client = vision.ImageAnnotatorClient()
-    
-        # 이미지 객체 생성
-        image = vision.Image(content=image_bytes)
+        try:
+            # Vision API 클라이언트 생성
+            client = vision.ImageAnnotatorClient()
         
-        # 텍스트 감지 요청
-        response = client.text_detection(image=image)
-        texts = response.text_annotations
-        
-        # 추출된 텍스트를 하나의 문자열로 합침
-        full_text = ' '.join([text.description for text in texts])
-        st.write(full_text)
+            # 이미지 객체 생성
+            image = vision.Image(content=image_bytes)
+            
+            # 텍스트 감지 요청
+            response = client.text_detection(image=image)
+            texts = response.text_annotations
+            
+            # 추출된 텍스트를 하나의 문자열로 합침
+            full_text = ' '.join([text.description for text in texts])
+            st.write(full_text)
 
-        # 텍스트 파싱
-        parsed_data = parse_medical_report(full_text)
-        
-        return parsed_data
+            # 텍스트 파싱
+            parsed_data = parse_medical_report(full_text)
+            
+            return parsed_data
 
-    except Exception as e:
-        st.error(f"Error detecting text: {e}")
-        return None
+        except Exception as e:
+            st.error(f"Error detecting text: {e}")
+            return None
 
 
 def parse_medical_report(text):
