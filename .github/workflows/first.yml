@@ -27,4 +27,4 @@ jobs:
 
       - name: Run Streamlit app
         run: |
-          nohup streamlit run a/pages/4_예측 체험.py > streamlit.log 2>&1 &
+          nohup streamlit run a/Home.py > streamlit.log 2>&1 &
