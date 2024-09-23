@@ -14,6 +14,7 @@ from pages.__func__.function import classify_risk
 from dotenv import load_dotenv
 import json
 import tempfile
+import genai
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
