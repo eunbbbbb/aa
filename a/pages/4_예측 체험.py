@@ -176,32 +176,38 @@ def detect_text(image_bytes):
         "universe_domain": st.secrets["GENERAL"]["universe_domain"]
     }
 
-    try:
-        # API키 값 위치 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
-        # Vision API 클라이언트 생성
-        client = vision.ImageAnnotatorClient()
-    
-        # 이미지 객체 생성
-        image = vision.Image(content=image_bytes)
-        
-        # 텍스트 감지 요청
-        response = client.text_detection(image=image)
-        texts = response.text_annotations
-        
-        # 추출된 텍스트를 하나의 문자열로 합침
-        full_text = ' '.join([text.description for text in texts])
-        st.write(full_text)
+    # 임시 파일에 JSON 저장
+    with tempfile.NamedTemporaryFile(delete=True, suffix='.json') as temp_file:
+        json.dump(secrets, temp_file)
+        temp_file.flush()  # 데이터를 파일에 기록
 
-        # 텍스트 파싱
-        parsed_data = parse_medical_report(full_text)
+        # 환경 변수 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
         
-        return parsed_data
+        try:
+            # Vision API 클라이언트 생성
+            client = vision.ImageAnnotatorClient()
+            
+            # 이미지 객체 생성
+            image = vision.Image(content=image_bytes)
+            
+            # 텍스트 감지 요청
+            response = client.text_detection(image=image)
+            texts = response.text_annotations
+            
+            # 추출된 텍스트를 하나의 문자열로 합침
+            full_text = ' '.join([text.description for text in texts])
+            st.write(full_text)
 
-    except Exception as e:
-        st.error(f"Error detecting text: {e}")
-        return None
+            # 텍스트 파싱
+            parsed_data = parse_medical_report(full_text)
+            
+            return parsed_data
 
+        except Exception as e:
+            st.error(f"Error detecting text: {e}")
+            return None
+            
 def parse_medical_report(text):
     result = {}
     patterns = [
