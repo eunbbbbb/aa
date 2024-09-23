@@ -1,0 +1,10 @@
+streamlit==1.38.0
+pandas==1.4.2
+seaborn==0.11.2
+numpy>=1.23.0
+joblib
+google-cloud-vision
+matplotlib
+plotly
+xgboost
+sklearn
