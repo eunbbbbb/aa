@@ -158,11 +158,20 @@ def home_page():
 
 def detect_text(image_bytes):
     # .env 파일 로드
-    load_dotenv()
-    
-    # API_KEY 환경 변수에서 가져오기
     API_KEY = st.secrets["API_KEY"]
 
+    type_ = API_KEY["type"]
+    project_id = API_KEY["project_id"]
+    private_key_id = API_KEY["private_key_id"]
+    private_key = API_KEY["private_key"]
+    client_email = API_KEY["client_email"]
+    client_id = API_KEY["client_id"]
+    auth_uri = API_KEY["auth_uri"]
+    token_uri = API_KEY["token_uri"]
+    auth_provider_x509_cert_url = API_KEY["auth_provider_x509_cert_url"]
+    client_x509_cert_url = API_KEY["client_x509_cert_url"]
+    universe_domain = API_KEY["universe_domain"]
+    
     # API_KEY가 None인지 확인
     if API_KEY is None:
         raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
@@ -170,8 +179,6 @@ def detect_text(image_bytes):
     try:
         # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
-    
-        print(f"API_KEY: {API_KEY}")
         
         # Vision API 클라이언트 생성
         client = vision.ImageAnnotatorClient()
