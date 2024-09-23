@@ -14,6 +14,7 @@ from pages.__func__.function import classify_risk
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
+API_KEY_PATH = os.getenv('API_KEY')
 
 # 페이지 설정
 st.set_page_config(layout="wide")
@@ -154,8 +155,6 @@ def home_page():
             st.session_state.page = 'survey'
 
 def detect_text(image_bytes):
-    API_KEY_PATH = os.getenv('API_KEY')
-    
     # API키 값 위치 설정
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
     client = vision.ImageAnnotatorClient()
