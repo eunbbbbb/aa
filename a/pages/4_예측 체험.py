@@ -83,11 +83,12 @@ def home_page():
     if uploaded_files:
         all_parsed_data = []
         
-        for uploaded_file in uploaded_files:
-            image_bytes = uploaded_file.read() # 파일을 바이트 형식으로 변환
-            
-            # 텍스트 추출
-            parsed_data = detect_text(image_bytes)
+       for uploaded_file in uploaded_files:
+            image_bytes = uploaded_file.read()  # 파일을 바이트 형식으로 변환
+            if isinstance(image_bytes, bytes):  # 바이트 형식인지 확인
+                parsed_data = detect_text(image_bytes)
+        else:
+            st.error("Uploaded file is not in bytes format.")
             
             if parsed_data:  # 텍스트가 추출된 경우 
                 # 숫자값을 float로 변환
@@ -161,7 +162,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
-    secrets = {
+    API_KEY_PATH = {
         "type": st.secrets["GENERAL"]["type"],
         "project_id": st.secrets["GENERAL"]["project_id"],
         "private_key_id": st.secrets["GENERAL"]["private_key_id"],
@@ -176,31 +177,26 @@ def detect_text(image_bytes):
     }
 
     try:
-        # GOOGLE_APPLICATION_CREDENTIALS 파일 경로를 임시 파일로 저장
-        with tempfile.NamedTemporaryFile(delete=True) as temp_file:
-            json.dump(secrets, temp_file)
-            temp_file.flush()  # 파일을 flush하여 데이터가 실제로 기록되게
-
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
-            
-            # Vision API 클라이언트 생성
-            client = vision.ImageAnnotatorClient()
+        # API키 값 위치 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
+        # Vision API 클라이언트 생성
+        client = vision.ImageAnnotatorClient()
+    
+        # 이미지 객체 생성
+        image = vision.Image(content=image_bytes)
         
-            # 이미지 객체 생성
-            image = vision.Image(content=image_bytes)
-            
-            # 텍스트 감지 요청
-            response = client.text_detection(image=image)
-            texts = response.text_annotations
-            
-            # 추출된 텍스트를 하나의 문자열로 합침
-            full_text = ' '.join([text.description for text in texts])
-            st.write(full_text)
+        # 텍스트 감지 요청
+        response = client.text_detection(image=image)
+        texts = response.text_annotations
+        
+        # 추출된 텍스트를 하나의 문자열로 합침
+        full_text = ' '.join([text.description for text in texts])
+        st.write(full_text)
 
-            # 텍스트 파싱
-            parsed_data = parse_medical_report(full_text)
-            
-            return parsed_data
+        # 텍스트 파싱
+        parsed_data = parse_medical_report(full_text)
+        
+        return parsed_data
 
     except Exception as e:
         st.error(f"Error detecting text: {e}")
