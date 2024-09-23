@@ -161,7 +161,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
-    genai.configure(api_key=os.getenv("GENERAL"))
+    api_key = os.getenv([GENERAL])
 
     try:
         # Vision API 클라이언트 생성
