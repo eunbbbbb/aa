@@ -6,4 +6,6 @@ joblib
 google-cloud-vision
 matplotlib
 plotly
+xgboost
+sklearn
 __func__
