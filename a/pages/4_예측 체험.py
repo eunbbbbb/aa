@@ -164,7 +164,7 @@ def detect_text(image_bytes):
     if API_KEY is None:
         raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
 
-     try:
+    try:
         # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
     
