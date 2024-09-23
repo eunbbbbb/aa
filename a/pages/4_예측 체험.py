@@ -161,7 +161,7 @@ def detect_text(image_bytes):
     load_dotenv()
     
     # API_KEY 환경 변수에서 가져오기
-    API_KEY = os.getenv("API_KEY")
+    API_KEY = st.secrets["API_KEY"]
 
     # API_KEY가 None인지 확인
     if API_KEY is None:
