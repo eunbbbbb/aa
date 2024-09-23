@@ -79,7 +79,7 @@ with con1:
         with st.expander("",expanded=True):
             D1, D2 = st.columns([0.5,0.5])
             with D1:
-                st.image('/__func__/당뇨병원인.jpg', caption='출처 : 질병관리청' )
+                st.image('a/pages/__func__/당뇨병원인.jpg', caption='출처 : 질병관리청' )
             with D2:
                 st.markdown('''
                             - **비만**
@@ -100,28 +100,28 @@ with con1:
         with con3:
             st.markdown('<div style="font-size: 23px;"> <b>다음(多飮)</b></div>', unsafe_allow_html=True)
             st.write('<span style="font-size: 18px;">&#8226; </span> 갈증이 심해 물을 많이 마시게 됩니다', unsafe_allow_html=True)
-            st.image('/__func__/다음.png', caption='출처 : 대한당뇨병협회')
+            st.image('a/pages/__func__/다음.png', caption='출처 : 대한당뇨병협회')
         with con4:
             st.markdown('<div style="font-size: 23px;"> <b>다식(多食)</b></div>', unsafe_allow_html=True)
             st.write('<span style="font-size: 18px;">&#8226; </span> 공복감이 심해 점점 더 먹으려 합니다', unsafe_allow_html=True)
-            st.image('/__func__/다식.png', caption='출처 : 대한당뇨병협회')
+            st.image(a/pages/__func__/다식.png', caption='출처 : 대한당뇨병협회')
         with con5:
             st.markdown('<div style="font-size: 23px;"> <b>다뇨(多尿)</b></div>', unsafe_allow_html=True)
             st.write('<span style="font-size: 18px;">&#8226; </span> 소변을 많이 보게 됩니다', unsafe_allow_html=True)
-            st.image('/__func__/다뇨.png', caption='출처 : 대한당뇨병협회')
+            st.image('a/pages/__func__/다뇨.png', caption='출처 : 대한당뇨병협회')
         con6, con7 = st.columns([0.5,0.5])
         with con6:
             st.subheader(':small_blue_diamond: 전신 증상')
-            st.image('/__func__/전신증상.jpg', caption='출처 : 질병관리청')
+            st.image('a/pages/__func__/전신증상.jpg', caption='출처 : 질병관리청')
         with con7:
             st.subheader(':small_blue_diamond: 기타 증상')
-            st.image('/__func__/기타증상.jpg', caption='출처 : 질병관리청')
+            st.image('a/pages/__func__/기타증상.jpg', caption='출처 : 질병관리청')
 
     with tab4:
         st.subheader('당뇨병은 혈당 검사로 진단합니다')
         st.subheader(':small_blue_diamond: 당뇨병 진단 기준')
         st.write('다음 중 1개 이상 해당 시 당뇨병으로 진단합니다')
-        st.image('/__func__/그림.png', caption='출처 : 질병관리청', use_column_width=True)
+        st.image('a/pages/__func__/그림.png', caption='출처 : 질병관리청', use_column_width=True)
         st.subheader(':small_blue_diamond: 당뇨병 검사')
         st.write('다음과 같은 경우, 당뇨병에 대한 검사를 해보는 것이 좋습니다')
         with st.expander("",expanded=True):
