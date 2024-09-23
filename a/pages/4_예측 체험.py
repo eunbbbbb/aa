@@ -153,34 +153,31 @@ def home_page():
         if st.button('설문조사 시작하기'):
             st.session_state.page = 'survey'
 
-
+API_KEY_PATH = os.getenv('API_KEY')
 def detect_text(image_bytes):
-    # 하드코딩된 API 키 파일 경로
-    API_KEY_PATH = os.getenv('API_KEY')
-    try:
-        # API키 값 위치 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
-        client = vision.ImageAnnotatorClient()
+    # API키 값 위치 설정
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
+    client = vision.ImageAnnotatorClient()
 
-        # 이미지 객체 생성
-        image = vision.Image(content=image_bytes)
-        
-        # 텍스트 감지 요청
-        response = client.text_detection(image=image)
-        texts = response.text_annotations
-        
-        # 추출된 텍스트를 하나의 문자열로 합침
-        full_text = ' '.join([text.description for text in texts])
-        st.write(full_text)
+    # 이미지 객체 생성
+    image = vision.Image(content=image_bytes)
+    
+    # 텍스트 감지 요청
+    response = client.text_detection(image=image)
+    texts = response.text_annotations
+    
+    # 추출된 텍스트를 하나의 문자열로 합침
+    full_text = ' '.join([text.description for text in texts])
+    st.write(full_text)
 
-        # 텍스트 파싱
-        parsed_data = parse_medical_report(full_text)
-        
-        return parsed_data
+    # 텍스트 파싱
+    parsed_data = parse_medical_report(full_text)
+    
+    return parsed_data
 
-    except Exception as e:
-        st.error(f'An error occurred: {str(e)}')
-        return None
+except Exception as e:
+    st.error(f'An error occurred: {str(e)}')
+    return None
 
 def parse_medical_report(text):
     result = {}
