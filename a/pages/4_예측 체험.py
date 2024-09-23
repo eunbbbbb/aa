@@ -12,6 +12,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from pages.__func__.function import classify_risk
 from dotenv import load_dotenv
+import json
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
@@ -157,16 +158,32 @@ def home_page():
 
 
 def detect_text(image_bytes):
-    # .env 파일 로드
-    API_KEY = st.secrets["general"]['private_key']
-    
-    # API_KEY가 None인지 확인
-    if API_KEY is None:
-        raise ValueError("API_KEY 환경 변수가 설정되지 않았습니다.")
+    # 시크릿에서 JSON 데이터 가져오기
+    secrets = {
+        "type": st.secrets["type"],
+        "project_id": st.secrets["project_id"],
+        "private_key_id": st.secrets["private_key_id"],
+        "private_key": st.secrets["private_key"],
+        "client_email": st.secrets["client_email"],
+        "client_id": st.secrets["client_id"],
+        "auth_uri": st.secrets["auth_uri"],
+        "token_uri": st.secrets["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["client_x509_cert_url"],
+        "universe_domain": st.secrets["universe_domain"],
+    }
 
+# 사용 예시
+if secrets["private_key"]:
+    st.write("API 키가 성공적으로 불러와졌습니다.")
+    # 추가적인 API 요청 코드...
+else:
+    st.error("API 키를 불러오는 데 실패했습니다.")
+
+    
     try:
         # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
         
         # Vision API 클라이언트 생성
         client = vision.ImageAnnotatorClient()
