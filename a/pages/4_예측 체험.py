@@ -178,7 +178,7 @@ def detect_text(image_bytes):
 
     # 임시 파일에 JSON 저장
     with tempfile.NamedTemporaryFile(delete=True, suffix='.json') as temp_file:
-        json.dump(secrets, temp_file)
+        json.dump(API_KEY_PATH, temp_file)
         temp_file.flush()  # 데이터를 파일에 기록
 
         # 환경 변수 설정
