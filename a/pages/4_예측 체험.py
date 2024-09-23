@@ -173,11 +173,10 @@ def detect_text(image_bytes):
         "universe_domain"= st.secrets["general"]["universe_domain"]
     }
 
+    # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
 
-    try:
-        # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
-        
+    try: 
         # Vision API 클라이언트 생성
         client = vision.ImageAnnotatorClient()
     
