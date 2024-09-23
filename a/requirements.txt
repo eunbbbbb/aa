@@ -7,4 +7,4 @@ google-cloud-vision
 matplotlib
 plotly
 xgboost
-sklearn
+scikit-learn
