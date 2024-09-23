@@ -160,7 +160,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
-        secrets = {
+    secrets = {
         "type": st.secrets["GENERAL"]["type"],
         "project_id": st.secrets["GENERAL"]["project_id"],
         "private_key_id": st.secrets["GENERAL"]["private_key_id"],
