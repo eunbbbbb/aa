@@ -162,7 +162,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
-    API_KEY_PATH = {
+    secrets = {
         "type": st.secrets["GENERAL"]["type"],
         "project_id": st.secrets["GENERAL"]["project_id"],
         "private_key_id": st.secrets["GENERAL"]["private_key_id"],
@@ -178,7 +178,7 @@ def detect_text(image_bytes):
 
     # 임시 파일에 JSON 저장
     with tempfile.NamedTemporaryFile(delete=True, suffix='.json') as temp_file:
-        json.dump(API_KEY_PATH, temp_file)
+        json.dump(secrets, temp_file)
         temp_file.flush()  # 데이터를 파일에 기록
 
         # 환경 변수 설정
