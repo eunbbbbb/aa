@@ -202,7 +202,7 @@ else:
         # 텍스트 파싱
         parsed_data = parse_medical_report(full_text)
         
-        return parsed_data
+    return parsed_data
 
     except Exception as e:
         st.error(f"Error detecting text: {e}")
