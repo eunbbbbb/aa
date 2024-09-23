@@ -9,4 +9,3 @@ plotly
 xgboost
 scikit-learn
 python-dotenv
-genai
