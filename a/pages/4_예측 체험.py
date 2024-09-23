@@ -172,7 +172,7 @@ def detect_text(image_bytes):
         "auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"],
         "client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"],
         "universe_domain": st.secrets["GENERAL"]["universe_domain"]
-    ]
+    }
 
     # GOOGLE_APPLICATION_CREDENTIALS 파일 경로를 임시 파일로 저장
     with tempfile.NamedTemporaryFile(delete=True) as temp_file:
