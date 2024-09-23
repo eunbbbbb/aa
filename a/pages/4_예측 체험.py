@@ -156,11 +156,11 @@ def home_page():
 
 def detect_text(image_bytes):
     # 하드코딩된 API 키 파일 경로
-    API_KEY_PATH = 'C:/Users/1104_6/OneDrive/바탕 화면/새 폴더/lithe-record-434508-a5-375deb43aa45.json'
+    API_KEY = os.getenv("API_KEY")
 
     try:
         # API키 값 위치 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY
         client = vision.ImageAnnotatorClient()
 
         # 이미지 객체 생성
