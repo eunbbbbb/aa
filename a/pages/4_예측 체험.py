@@ -173,14 +173,7 @@ def detect_text(image_bytes):
         "universe_domain": st.secrets["universe_domain"],
     }
 
-# 사용 예시
-if secrets["private_key"]:
-    st.write("API 키가 성공적으로 불러와졌습니다.")
-    # 추가적인 API 요청 코드...
-else:
-    st.error("API 키를 불러오는 데 실패했습니다.")
 
-    
     try:
         # API_KEY를 GOOGLE_APPLICATION_CREDENTIALS로 설정
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = secrets
@@ -202,7 +195,7 @@ else:
         # 텍스트 파싱
         parsed_data = parse_medical_report(full_text)
         
-    return parsed_data
+        return parsed_data
 
     except Exception as e:
         st.error(f"Error detecting text: {e}")
