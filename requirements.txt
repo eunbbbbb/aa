@@ -1,8 +1,0 @@
-streamlit
-pandas
-seaborn
-numpy
-joblib
-google-cloud-vision
-matplotlib
-plotly
