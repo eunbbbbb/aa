@@ -79,7 +79,7 @@ with con1:
         with st.expander("",expanded=True):
             D1, D2 = st.columns([0.5,0.5])
             with D1:
-                st.image('a/pages/__func__/당뇨병원인.jpg', caption='출처 : 질병관리청' )
+                st.image('a/pages/__func__/당뇨병원인.jpg', caption= '출처 : 질병관리청' )
             with D2:
                 st.markdown('''
                             - **비만**
@@ -104,7 +104,7 @@ with con1:
         with con4:
             st.markdown('<div style="font-size: 23px;"> <b>다식(多食)</b></div>', unsafe_allow_html=True)
             st.write('<span style="font-size: 18px;">&#8226; </span> 공복감이 심해 점점 더 먹으려 합니다', unsafe_allow_html=True)
-            st.image(a/pages/__func__/다식.png', caption='출처 : 대한당뇨병협회')
+            st.image('a/pages/__func__/다식.png', caption='출처 : 대한당뇨병협회')
         with con5:
             st.markdown('<div style="font-size: 23px;"> <b>다뇨(多尿)</b></div>', unsafe_allow_html=True)
             st.write('<span style="font-size: 18px;">&#8226; </span> 소변을 많이 보게 됩니다', unsafe_allow_html=True)
