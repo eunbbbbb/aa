@@ -13,7 +13,7 @@ import plotly.express as px
 from pages.__func__.function import classify_risk
 
 # 모델 로드
-pred_model = joblib.load('C:/Users/1104_6/[강의자료]/[고은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/pred.pkl')
+pred_model = joblib.load('__func__/pred.pkl')
 
 # 페이지 설정
 st.set_page_config(layout="wide")
