@@ -50,4 +50,5 @@ with empty3:
     st.write('')
 
 with con4:
-    st.image('./pages/__func__/다운로드.png', caption='출처 : GC녹십자아이메드')
+    image_path = os.path.join(os.getcwd(), 'pages', '__func__', '다운로드.png')
+    st.image(image_path, caption='출처 : GC녹십자아이메드')
