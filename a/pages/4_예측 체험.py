@@ -177,22 +177,23 @@ def detect_text(image_bytes):
     # 이미지 객체 생성
     image = vision.Image(content=image_bytes)
     
-    # 텍스트 감지 요청
-    response = client.text_detection(image=image)
-    texts = response.text_annotations
-    
-    # 추출된 텍스트를 하나의 문자열로 합침
-    full_text = ' '.join([text.description for text in texts])
-    st.write(full_text)
+    try:
+        # 텍스트 감지 요청
+        response = client.text_detection(image=image)
+        texts = response.text_annotations
+        
+        # 추출된 텍스트를 하나의 문자열로 합침
+        full_text = ' '.join([text.description for text in texts])
+        st.write(full_text)
 
-    # 텍스트 파싱
-    parsed_data = parse_medical_report(full_text)
-    
-    return parsed_data
+        # 텍스트 파싱
+        parsed_data = parse_medical_report(full_text)
+        
+        return parsed_data
 
-except Exception as e:
-    st.error(f'An error occurred: {str(e)}')
-    return None
+    except Exception as e:
+        st.error(f"Error detecting text: {e}")
+        return None
 
 def parse_medical_report(text):
     result = {}
