@@ -159,18 +159,6 @@ def home_page():
 def detect_text(image_bytes):
     # .env 파일 로드
     API_KEY = st.secrets["API_KEY"]
-
-    type_ = API_KEY["type"]
-    project_id = API_KEY["project_id"]
-    private_key_id = API_KEY["private_key_id"]
-    private_key = API_KEY["private_key"]
-    client_email = API_KEY["client_email"]
-    client_id = API_KEY["client_id"]
-    auth_uri = API_KEY["auth_uri"]
-    token_uri = API_KEY["token_uri"]
-    auth_provider_x509_cert_url = API_KEY["auth_provider_x509_cert_url"]
-    client_x509_cert_url = API_KEY["client_x509_cert_url"]
-    universe_domain = API_KEY["universe_domain"]
     
     # API_KEY가 None인지 확인
     if API_KEY is None:
