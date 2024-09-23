@@ -80,7 +80,7 @@ def home_page():
     uploaded_files = st.file_uploader("이미지 최대 2장까지 업로드 가능", type=["jpg", "jpeg", "png", "tif", "tiff"], accept_multiple_files=True)
     
     st.markdown(' ')
-    if uploaded_files:
+    if uploaded_files is not None:
         all_parsed_data = []
         
         for uploaded_file in uploaded_files:
@@ -176,9 +176,6 @@ def detect_text(image_bytes):
     
     try:
         # GOOGLE_APPLICATION_CREDENTIALS 파일 경로를 임시 파일로 저장
-        import tempfile
-        import json
-    
         with tempfile.NamedTemporaryFile(delete=True) as temp_file:
             json.dump(secrets, temp_file)
             temp_file.flush()  # 파일을 flush하여 데이터가 실제로 기록되게
