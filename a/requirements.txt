@@ -8,3 +8,4 @@ matplotlib
 plotly
 xgboost
 scikit-learn
+os
