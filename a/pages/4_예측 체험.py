@@ -160,19 +160,19 @@ def home_page():
 
 def detect_text(image_bytes):
     # 시크릿에서 JSON 데이터 가져오기
-    secrets = {
-        "type": st.secrets["GENERAL"]["type"],
-        "project_id": st.secrets["GENERAL"]["project_id"],
-        "private_key_id": st.secrets["GENERAL"]["private_key_id"],
-        "private_key": st.secrets["GENERAL"]["private_key"],
-        "client_email": st.secrets["GENERAL"]["client_email"],
-        "client_id": st.secrets["GENERAL"]["client_id"],
-        "auth_uri": st.secrets["GENERAL"]["auth_uri"],
-        "token_uri": st.secrets["GENERAL"]["token_uri"],
-        "auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"],
-        "universe_domain": st.secrets["GENERAL"]["universe_domain"]
-    }
+    secrets = [
+        ("type": st.secrets["GENERAL"]["type"]),
+        ("project_id": st.secrets["GENERAL"]["project_id"]),
+        ("private_key_id": st.secrets["GENERAL"]["private_key_id"]),
+        ("private_key": st.secrets["GENERAL"]["private_key"]),
+        ("client_email": st.secrets["GENERAL"]["client_email"]),
+        ("client_id": st.secrets["GENERAL"]["client_id"]),
+        ("auth_uri": st.secrets["GENERAL"]["auth_uri"]),
+        ("token_uri": st.secrets["GENERAL"]["token_uri"]),
+        ("auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"]),
+        ("client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"]),
+        ("universe_domain": st.secrets["GENERAL"]["universe_domain"])
+    ]
 
     # GOOGLE_APPLICATION_CREDENTIALS 파일 경로를 임시 파일로 저장
     with tempfile.NamedTemporaryFile(delete=True) as temp_file:
