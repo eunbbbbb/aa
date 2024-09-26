@@ -11,5 +11,5 @@ scikit-learn
 python-dotenv
 faiss-gpu
 langchain-community
--U sentence-transformers
+sentence-transformers
 langchain
