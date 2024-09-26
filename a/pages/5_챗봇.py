@@ -2,7 +2,7 @@ import streamlit as st
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
-from langchain.docstore import Document
+from langchain.schema import Document
 from langchain.chains import RetrievalQA
 from langchain_community.llms import Ollama
 import subprocess
