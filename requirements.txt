@@ -1,4 +1,5 @@
 streamlit
+streamlit-chat
 pandas==1.4.2
 seaborn
 numpy>=1.21.0,<1.22.0
