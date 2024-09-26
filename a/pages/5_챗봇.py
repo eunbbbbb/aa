@@ -5,6 +5,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.vectorstores.utils import DistanceStrategy
 import pandas as pd
+import subprocess
 import re
 import numpy as np
 
@@ -16,7 +17,7 @@ embeddings_model = HuggingFaceEmbeddings(
 )
 
 # 텍스트 데이터 줄글로 가져오기
-with open('/content/drive/MyDrive/data/crawled_data.txt', 'r', encoding='utf-8') as f:
+with open(''a/pages/__func__/crawled_data.txt', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # 텍스트를 청크로 나누기
@@ -47,9 +48,10 @@ db = FAISS.from_documents(docs, embeddings_model)
 # 벡터디비에 저장한 거 로컬에 저장
 db.save_local('faiss')
 
-git clone https://github.com/ollama/ollama.git
-cd ollama
 
+
+# Git 명령어 실행
+subprocess.run(["git", "clone", "https://github.com/ollama/ollama.git"])
 
 # llm과 같이 실행 
 from langchain.chains import RetrievalQA
