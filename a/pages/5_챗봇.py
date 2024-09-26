@@ -1,6 +1,6 @@
 import streamlit as st
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.embeddings import HuggingFaceEmbeddings  # 변경된 import
+from langchain_community.vectorstores import FAISS  # 변경된 import
 from langchain.vectorstores import FAISS
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
