@@ -9,3 +9,7 @@ plotly
 xgboost
 scikit-learn
 python-dotenv
+faiss-gpu
+langchain-community
+-U sentence-transformers
+langchain
