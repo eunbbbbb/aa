@@ -17,7 +17,7 @@ embeddings_model = HuggingFaceEmbeddings(
 )
 
 # 텍스트 데이터 줄글로 가져오기
-with open(''a/pages/__func__/crawled_data.txt', 'r', encoding='utf-8') as f:
+with open('a/pages/__func__/crawled_data.txt', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # 텍스트를 청크로 나누기
