@@ -32,9 +32,6 @@ documents = [Document(page_content=chunk) for chunk in chunks]
 db = FAISS.from_documents(documents, embeddings_model)
 db.save_local('faiss')  # 로컬에 저장
 
-# Git 명령어 실행 (필요한 경우)
-# subprocess.run(["git", "clone", "https://github.com/ollama/ollama.git"])
-
 # LLM과 같이 실행
 llm = Ollama(model="gemma2")
 
