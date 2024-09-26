@@ -7,7 +7,7 @@ from langchain.chains import RetrievalQA
 from langchain_community.llms import Ollama
 
 # Streamlit 애플리케이션 제목
-st.title("챗봇과 대화하기")
+st.title("🤖 챗봇과 대화하기")
 
 # 허깅페이스의 모델로 임베딩모델 지정
 embeddings_model = HuggingFaceEmbeddings(
