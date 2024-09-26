@@ -9,6 +9,10 @@ import subprocess
 import re
 import numpy as np
 
+# 페이지 설정
+st.set_page_config(layout="wide")
+
+
 # 허깅페이스의 모델로 임베딩모델 지정
 embeddings_model = HuggingFaceEmbeddings(
     model_name='jhgan/ko-sroberta-nli', # 사용할 모델 지정(한국어 자연어 추론에 최적화된 모델)
