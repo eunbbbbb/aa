@@ -5,7 +5,6 @@ from langchain.vectorstores import FAISS
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
 from langchain_community.llms import Ollama
-import subprocess
 
 # Streamlit 애플리케이션 제목
 st.title("챗봇과 대화하기")
@@ -45,16 +44,28 @@ qa = RetrievalQA.from_chain_type(
     return_source_documents=True
 )
 
-# 사용자 입력 처리
-user_input = st.text_input("당신의 질문을 입력하세요:")
+# 질문과 답변이 다 보일 수 있게 저장하는 리스트 
+if 'generated' not in st.session_state:  # 챗봇 응답 저장
+    st.session_state['generated'] = []
+if 'past' not in st.session_state:  # 사용자 입력 저장
+    st.session_state['past'] = []
 
-if st.button("질문하기"):
-    if user_input:
-        formatted_query = f"{user_input} (단, 답변은 반드시 한국어로 작성해 주세요.)"
-        try:
-            result = qa({"query": formatted_query})
-            st.write("챗봇의 응답:", result["generated_text"])
-        except Exception as e:
-            st.error(f"오류 발생: {e}")
-    else:
-        st.warning("질문을 입력해 주세요.")
+# 사용자 입력 처리
+with st.form('form', clear_on_submit=True):
+    user_input = st.text_input('당신의 질문을 입력하세요:', key='input')
+    submitted = st.form_submit_button('질문하기')
+
+if submitted and user_input:
+    formatted_query = f"{user_input} (단, 답변은 반드시 한국어로 작성해 주세요.)"
+    try:
+        result = qa({"query": formatted_query})
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(result["generated_text"])
+    except Exception as e:
+        st.error(f"오류 발생: {e}")
+
+# 이전 질문과 답변 표시
+if st.session_state['generated']:
+    for i in range(len(st.session_state['generated'])):
+        st.write(f"**You:** {st.session_state['past'][i]}")
+        st.write(f"**챗봇:** {st.session_state['generated'][i]}")
