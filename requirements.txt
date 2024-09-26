@@ -11,7 +11,7 @@ xgboost
 scikit-learn
 python-dotenv
 faiss-gpu
-faiss-cpu
 langchain-community
 sentence-transformers
 langchain
+faiss-cpu sentence-transformers
