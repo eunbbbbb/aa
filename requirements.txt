@@ -14,4 +14,4 @@ faiss-gpu
 langchain-community
 sentence-transformers
 langchain
-faiss-cpu sentence-transformers
+faiss-cpu
