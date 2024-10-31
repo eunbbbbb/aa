@@ -13,7 +13,7 @@ import plotly.express as px
 from pages.__func__.function import classify_risk
 
 # 모델 로드
-pred_model = joblib.load('C:/Users/SAMSUNG/[은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/pred.pkl')
+pred_model = joblib.load('a/pages/__func__/pred.pkl')
 
 # 페이지 설정
 st.set_page_config(layout="wide")
@@ -303,31 +303,6 @@ def display_survey(existing_data):
             st.session_state.data = df    #.to_dict(orient='list')
             st.session_state.view_data = data_dict
             st.session_state.page = 'results'
-
-# def results_page():
-#     st.header(":pill: 예측 결과")
-#     df = pd.DataFrame(st.session_state.data)
-#     view_df = pd.DataFrame([st.session_state.view_data])
-#     st.write(view_df)
-
-#     pred = pred_model.predict(df)
-#     pred_proba = pred_model.predict_proba(df)[:, 1]
-#     pred_pro = np.round(pred_proba * 100, 2)
-
-#     risk_labels = classify_risk(pred_proba)
-
-#     st.markdown('___')
-#     st.header('당신의 당뇨 현 상황은')
-#     st.header(f'{risk_labels}')
-#     st.write(f':small_blue_diamond: 당신의 당뇨 확률 :{pred_pro}%')
-
-#     if st.button("홈으로 돌아가기"):
-#         st.session_state.page = 'home'
-
-#     # 당뇨 확률 데이터 프레임에 추가
-#     data = st.session_state.data.copy()  # 여기서 data를 정의합니다
-#     data['percent'] = pred_pro[0]
-
 
 def results_page():
     st.header(":pill: 예측 결과")
