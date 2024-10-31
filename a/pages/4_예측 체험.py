@@ -11,14 +11,9 @@ import os
 import plotly.graph_objects as go
 import plotly.express as px
 from pages.__func__.function import classify_risk
-from dotenv import load_dotenv
-import json
-import tempfile
-
 
 # 모델 로드
-pred_model = joblib.load('a/pages/__func__/pred.pkl')
-
+pred_model = joblib.load('C:/Users/SAMSUNG/[은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/pred.pkl')
 
 # 페이지 설정
 st.set_page_config(layout="wide")
@@ -84,11 +79,10 @@ def home_page():
         all_parsed_data = []
         
         for uploaded_file in uploaded_files:
-            image_bytes = uploaded_file.read()  # 파일을 바이트 형식으로 변환
-            if isinstance(image_bytes, bytes):  # 바이트 형식인지 확인
-                parsed_data = detect_text(image_bytes)
-            else:
-                st.error("Uploaded file is not in bytes format.")
+            image_bytes = uploaded_file.read() # 파일을 바이트 형식으로 변환
+            
+            # 텍스트 추출
+            parsed_data = detect_text(image_bytes)
             
             if parsed_data:  # 텍스트가 추출된 경우 
                 # 숫자값을 float로 변환
@@ -115,7 +109,7 @@ def home_page():
                 # 데이터가 하나만 있을 경우
                 combined_df = df
 
-               # DataFrame을 세션 상태에 저장
+            # DataFrame을 세션 상태에 저장
             st.session_state.df = combined_df
             
              # 검토 및 수정 버튼
@@ -129,20 +123,17 @@ def home_page():
                             continue
                         value = combined_df[column].values[0]
                         corrected_value = st.text_input(f"{column}:", value=value, key=column)
+
                         if value != corrected_value:
                             valid_data = False
                             combined_df[column] = corrected_value
 
-                    if not valid_data:
-                        st.warning("데이터가 수정되었습니다. 수정된 데이터를 확인 후 제출해주세요.")
-                    else:
-                        st.success("데이터가 올바릅니다.")
-                    
                     # 데이터 수정 완료 버튼
                     submit_button = st.form_submit_button("수정된 데이터 제출")
                     if submit_button:
                         combined_df = st.session_state.df
                         st.session_state.page = 'survey'
+
             else:
                 # 데이터가 맞다고 판단되면 설문조사 페이지로 넘어가기
                 if st.button('설문조사 시작하기'):
@@ -161,60 +152,41 @@ def home_page():
 
 
 def detect_text(image_bytes):
-    # 시크릿에서 JSON 데이터 가져오기
-    secrets = {
-        "type": st.secrets["GENERAL"]["type"],
-        "project_id": st.secrets["GENERAL"]["project_id"],
-        "private_key_id": st.secrets["GENERAL"]["private_key_id"],
-        "private_key": st.secrets["GENERAL"]["private_key"],
-        "client_email": st.secrets["GENERAL"]["client_email"],
-        "client_id": st.secrets["GENERAL"]["client_id"],
-        "auth_uri": st.secrets["GENERAL"]["auth_uri"],
-        "token_uri": st.secrets["GENERAL"]["token_uri"],
-        "auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"],
-        "client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"],
-        "universe_domain": st.secrets["GENERAL"]["universe_domain"]
-    }
+    # 하드코딩된 API 키 파일 경로
+    API_KEY_PATH = r'C:\Users\SAMSUNG\Desktop\새 폴더\lithe-record-434508-a5-375deb43aa45.json'
 
-    # 임시 파일에 JSON 저장
-    with tempfile.NamedTemporaryFile(delete=True, mode='w', suffix='.json') as temp_file:
-        json.dump(secrets, temp_file)
-        temp_file.flush()  # 데이터를 파일에 기록
+    try:
+        # API키 값 위치 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = API_KEY_PATH
+        client = vision.ImageAnnotatorClient()
 
-        # 환경 변수 설정
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
+        # 이미지 객체 생성
+        image = vision.Image(content=image_bytes)
         
-        try:
-            # Vision API 클라이언트 생성
-            client = vision.ImageAnnotatorClient()
-            
-            # 이미지 객체 생성
-            image = vision.Image(content=image_bytes)
-            
-            # 텍스트 감지 요청
-            response = client.text_detection(image=image)
-            texts = response.text_annotations
-            
-            # 추출된 텍스트를 하나의 문자열로 합침
-            full_text = ' '.join([text.description for text in texts])
-            st.write(full_text)
+        # 텍스트 감지 요청
+        response = client.text_detection(image=image)
+        texts = response.text_annotations
+        
+        # 추출된 텍스트를 하나의 문자열로 합침
+        full_text = ' '.join([text.description for text in texts])
+        st.write(full_text)
 
-            # 텍스트 파싱
-            parsed_data = parse_medical_report(full_text)
-            
-            return parsed_data
+        # 텍스트 파싱
+        parsed_data = parse_medical_report(full_text)
+        
+        return parsed_data
 
-        except Exception as e:
-            st.error(f"Error detecting text: {e}")
-            return None
-            
+    except Exception as e:
+        st.error(f'An error occurred: {str(e)}')
+        return None
+
 def parse_medical_report(text):
     result = {}
     patterns = [
         (r"요검사\s*신장질환\s*요단백\s*(\w+)", "요단백"),
-        (r"허리둘레\s*(\d+)", "허리둘레"),
-        (r"총 콜레스테롤\s*(\d+)", "총 콜레스테롤"),
-        (r"중성지방\s*(\d.+)", "중성지방"),
+        (r"허리둘레\s*(\w+)", "허리둘레"),
+        (r"총 콜레스테롤\s*(\w+)", "총 콜레스테롤"),
+        (r"중성지방\s*(\w+)", "중성지방"),
         (r"혈청\s크레아티닌\s*([\d.]+)", "혈중크레아티닌"),
         (r"ALT\(SGPT\)\s*(\d+)\s*U/L", "간장질환 ALT(SGPT)")
     ]
@@ -244,7 +216,8 @@ def survey_page():
 
 def display_survey(existing_data):
     st.title(':pill: 건강 상태 조사')
-    st.write('추가적인 자료를 필요로 하여 설문지에 응해 주시면 감사하겠습니다.')
+    st.write('추가적인 자료를 필요로 하여 설문에 응해 주시면 감사하겠습니다.')
+
 
     with st.form('survey_form'):
         form_elements = []
@@ -258,7 +231,7 @@ def display_survey(existing_data):
         # 나이
         나이 = existing_data.get('나이', 30)
         나이 = int(나이) if 나이 is not None and not pd.isna(나이) else 30
-        나이 = st.number_input('나이를 입력해주세요 (80세 이상이면 80입력해주세요) ', min_value=20, max_value=80, value=나이, key='input_age')
+        나이 = st.number_input('나이를 입력해주세요 (80세 이상이면 80입력해주세요) ', min_value=1, max_value=80, value=나이, key='input_age')
         form_elements.append(('age', 나이))
 
         # 허리둘레
@@ -284,7 +257,7 @@ def display_survey(existing_data):
         총_콜레스테롤 = existing_data.get('총 콜레스테롤')
         if pd.isna(총_콜레스테롤):
             총_콜레스테롤 = float(총_콜레스테롤) if 총_콜레스테롤 is not None and not pd.isna(총_콜레스테롤) else 50
-            총_콜레스테롤_value = st.number_input('총 콜레스테롤 수치를 입력해주세요 (단위: mg/dL)', min_value=50, max_value=500, value=총_콜레스테롤, key='input_chol')
+            총_콜레스테롤_value = st.number_input('총 콜레스테롤 수치를 입력해주세요 (단위: mg/dL)', min_value=20, max_value=500, value=총_콜레스테롤, key='input_chol')
             form_elements.append(('HE_chol', 총_콜레스테롤_value))
         else:
             form_elements.append(('HE_chol', 총_콜레스테롤))
@@ -331,6 +304,31 @@ def display_survey(existing_data):
             st.session_state.view_data = data_dict
             st.session_state.page = 'results'
 
+# def results_page():
+#     st.header(":pill: 예측 결과")
+#     df = pd.DataFrame(st.session_state.data)
+#     view_df = pd.DataFrame([st.session_state.view_data])
+#     st.write(view_df)
+
+#     pred = pred_model.predict(df)
+#     pred_proba = pred_model.predict_proba(df)[:, 1]
+#     pred_pro = np.round(pred_proba * 100, 2)
+
+#     risk_labels = classify_risk(pred_proba)
+
+#     st.markdown('___')
+#     st.header('당신의 당뇨 현 상황은')
+#     st.header(f'{risk_labels}')
+#     st.write(f':small_blue_diamond: 당신의 당뇨 확률 :{pred_pro}%')
+
+#     if st.button("홈으로 돌아가기"):
+#         st.session_state.page = 'home'
+
+#     # 당뇨 확률 데이터 프레임에 추가
+#     data = st.session_state.data.copy()  # 여기서 data를 정의합니다
+#     data['percent'] = pred_pro[0]
+
+
 def results_page():
     st.header(":pill: 예측 결과")
     df = pd.DataFrame(st.session_state.data)
@@ -351,6 +349,23 @@ def results_page():
     if st.button("홈으로 돌아가기"):
         st.session_state.page = 'home'
 
+    # 당뇨 확률 데이터 프레임에 추가
+    if 'data_with_percent' not in st.session_state:
+        st.session_state.data_with_percent = st.session_state.data.copy()
+    
+    # 데이터 형태 확인 및 변환
+    if isinstance(st.session_state.data_with_percent, dict):
+        data_with_percent = pd.DataFrame(st.session_state.data_with_percent)
+    elif isinstance(st.session_state.data_with_percent, pd.DataFrame):
+        data_with_percent = st.session_state.data_with_percent
+    else:
+        data_with_percent = pd.DataFrame(st.session_state.data_with_percent.reshape(-1, 9))
+    
+    # percent 열 추가
+    data_with_percent['percent'] = pred_pro[0]
+
+    # 세션 상태 업데이트
+    data_with_percent = st.session_state.data_with_percent
     data = st.session_state.data
 
     # 사이드바에서 변수를 조정하여 실시간으로 예측값을 업데이트
@@ -377,16 +392,6 @@ def results_page():
     update_prediction(updated_data)
 
 
-    # if st.button("설문조사 다시하기"):
-    #     # 모든 세션 상태 초기화
-    #     for key in list(st.session_state.keys()):
-    #         del st.session_state[key]
-
-    #     # df 초기화
-    #     st.session_state.df = pd.DataFrame()
-
-    #     # 세션 상태 초기화 후 설문 페이지로 이동
-    #     st.session_state.page = 'survey'
     
     if st.button("다시하기"):
         # 모든 세션 상태 초기화
