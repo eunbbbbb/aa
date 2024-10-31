@@ -52,7 +52,7 @@ def initialize_embedding_model():
 embeddings_model = initialize_embedding_model()
 
 
-with open('C:/Users/SAMSUNG/[은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/crawled_data.txt', 'r', encoding='utf-8') as f:
+with open('"a/pages/__func__/crawled_data.txt', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # 텍스트 분할 및 임베딩
@@ -91,7 +91,7 @@ prompt = PromptTemplate(
 )
 
 # 운동 데이터 로드
-file_path = 'C:/Users/SAMSUNG/[은비]/[공공데이터 분석및 AI챗봇 과정]/팀프로젝트 3차 대시보드/대시보드/pages/__func__/exercise.csv'
+file_path = '"a/pages/__func__/exercise.csv'
 exercise_data = pd.read_csv(file_path)
 
 # 나이에 따른 목표 그룹 매핑
