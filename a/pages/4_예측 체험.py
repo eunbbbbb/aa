@@ -166,52 +166,52 @@ def home_page():
 
 
 def detect_text(image_bytes):
-# 시크릿에서 JSON 데이터 가져오기
-secrets = {
-    "type": st.secrets["GENERAL"]["type"],
-    "project_id": st.secrets["GENERAL"]["project_id"],
-    "private_key_id": st.secrets["GENERAL"]["private_key_id"],
-    "private_key": st.secrets["GENERAL"]["private_key"],
-    "client_email": st.secrets["GENERAL"]["client_email"],
-    "client_id": st.secrets["GENERAL"]["client_id"],
-    "auth_uri": st.secrets["GENERAL"]["auth_uri"],
-    "token_uri": st.secrets["GENERAL"]["token_uri"],
-    "auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"],
-    "universe_domain": st.secrets["GENERAL"]["universe_domain"]
-}
-
-# 임시 파일에 JSON 저장
-with tempfile.NamedTemporaryFile(delete=True, mode='w', suffix='.json') as temp_file:
-    json.dump(secrets, temp_file)
-    temp_file.flush()  # 데이터를 파일에 기록
-
-    # 환경 변수 설정
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
+    # 시크릿에서 JSON 데이터 가져오기
+    secrets = {
+        "type": st.secrets["GENERAL"]["type"],
+        "project_id": st.secrets["GENERAL"]["project_id"],
+        "private_key_id": st.secrets["GENERAL"]["private_key_id"],
+        "private_key": st.secrets["GENERAL"]["private_key"],
+        "client_email": st.secrets["GENERAL"]["client_email"],
+        "client_id": st.secrets["GENERAL"]["client_id"],
+        "auth_uri": st.secrets["GENERAL"]["auth_uri"],
+        "token_uri": st.secrets["GENERAL"]["token_uri"],
+        "auth_provider_x509_cert_url": st.secrets["GENERAL"]["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": st.secrets["GENERAL"]["client_x509_cert_url"],
+        "universe_domain": st.secrets["GENERAL"]["universe_domain"]
+    }
     
-    try:
-        # Vision API 클라이언트 생성
-        client = vision.ImageAnnotatorClient()
+    # 임시 파일에 JSON 저장
+    with tempfile.NamedTemporaryFile(delete=True, mode='w', suffix='.json') as temp_file:
+        json.dump(secrets, temp_file)
+        temp_file.flush()  # 데이터를 파일에 기록
+    
+        # 환경 변수 설정
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file.name
         
-        # 이미지 객체 생성
-        image = vision.Image(content=image_bytes)
-        
-        # 텍스트 감지 요청
-        response = client.text_detection(image=image)
-        texts = response.text_annotations
-        
-        # 추출된 텍스트를 하나의 문자열로 합침
-        full_text = ' '.join([text.description for text in texts])
-        st.write(full_text)
-
-            # 텍스트 파싱
-            parsed_data = parse_medical_report(full_text)
+        try:
+            # Vision API 클라이언트 생성
+            client = vision.ImageAnnotatorClient()
             
-            return parsed_data
-
-    except Exception as e:
-        st.error(f"Error detecting text: {e}")
-        return None
+            # 이미지 객체 생성
+            image = vision.Image(content=image_bytes)
+            
+            # 텍스트 감지 요청
+            response = client.text_detection(image=image)
+            texts = response.text_annotations
+            
+            # 추출된 텍스트를 하나의 문자열로 합침
+            full_text = ' '.join([text.description for text in texts])
+            st.write(full_text)
+    
+                # 텍스트 파싱
+                parsed_data = parse_medical_report(full_text)
+                
+                return parsed_data
+    
+        except Exception as e:
+            st.error(f"Error detecting text: {e}")
+            return None
    
 
 def parse_medical_report(text):
