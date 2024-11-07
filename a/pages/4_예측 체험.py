@@ -20,11 +20,11 @@ load_dotenv()
 # 환경 변수에서 API_KEY 가져오기
 api_key = os.getenv('API_KEY')
 
-# API_KEY가 제대로 로드되었는지 확인
-if api_key:
-    st.write(f"API_KEY: {api_key}")
-else:
-    st.write("API_KEY is not set.")
+# # API_KEY가 제대로 로드되었는지 확인
+# if api_key:
+#     st.write(f"API_KEY: {api_key}")
+# else:
+#     st.write("API_KEY is not set.")
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
