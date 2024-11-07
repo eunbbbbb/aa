@@ -204,10 +204,10 @@ def detect_text(image_bytes):
             full_text = ' '.join([text.description for text in texts])
             st.write(full_text)
     
-                # 텍스트 파싱
-                parsed_data = parse_medical_report(full_text)
-                
-                return parsed_data
+            # 텍스트 파싱
+            parsed_data = parse_medical_report(full_text)
+            
+            return parsed_data
     
         except Exception as e:
             st.error(f"Error detecting text: {e}")
