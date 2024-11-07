@@ -11,6 +11,20 @@ import os
 import plotly.graph_objects as go
 import plotly.express as px
 from pages.__func__.function import classify_risk
+from dotenv import load_dotenv
+import os
+
+# .env 파일에서 환경 변수 로드
+load_dotenv()
+
+# 환경 변수에서 API_KEY 가져오기
+api_key = os.getenv('API_KEY')
+
+# API_KEY가 제대로 로드되었는지 확인
+if api_key:
+    st.write(f"API_KEY: {api_key}")
+else:
+    st.write("API_KEY is not set.")
 
 # 모델 로드
 pred_model = joblib.load('a/pages/__func__/pred.pkl')
@@ -153,7 +167,7 @@ def home_page():
 
 def detect_text(image_bytes):
     # 하드코딩된 API 키 파일 경로
-    API_KEY_PATH = r'C:\Users\SAMSUNG\Desktop\새 폴더\lithe-record-434508-a5-375deb43aa45.json'
+    API_KEY_PATH = api_key
 
     try:
         # API키 값 위치 설정
