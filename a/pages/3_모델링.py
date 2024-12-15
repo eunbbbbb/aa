@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import joblib
 from xgboost import XGBClassifier
+import xgboost as xgb
 from pages.__func__.function import split_and_convert_data, get_clf_eval, plot_roc_curve, plot_learning_curve_accuracy, confusion
 
 
@@ -16,11 +17,11 @@ from pages.__func__.function import split_and_convert_data, get_clf_eval, plot_r
 
 # XGBoost 모델을 XGBClassifier로 래핑하여 불러오기
 model_total = joblib.load('a/pages/__func__/pred.pkl')
-model_total = XGBClassifier()
+model_total = xgb.XGBClassifier()
 model_total.load_model('a/pages/__func__/pred.pkl')
 
 model_nonsampling = joblib.load('a/pages/__func__/pred_nonsampling.pkl')
-model_nonsampling = XGBClassifier()
+model_nonsampling = xgb.XGBClassifier()
 model_nonsampling.load_model('a/pages/__func__/pred_nonsampling.pkl')
 
 
