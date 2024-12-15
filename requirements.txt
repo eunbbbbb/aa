@@ -7,7 +7,7 @@ joblib
 google-cloud-vision
 matplotlib
 plotly
-xgboost
+xgboost==2.1.1
 scikit-learn
 python-dotenv
 faiss-gpu
