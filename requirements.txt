@@ -15,4 +15,3 @@ faiss-cpu
 langchain-community
 sentence-transformers
 langchain
-BaseEstimator
