@@ -5,25 +5,13 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
 import joblib
-from xgboost import XGBClassifier
-import xgboost as xgb
 from pages.__func__.function import split_and_convert_data, get_clf_eval, plot_roc_curve, plot_learning_curve_accuracy, confusion
 
 
 
 # 모델 불러오기
-# model_total = joblib.load('a/pages/__func__/pred.pkl')
-# model_nonsampling = joblib.load("a/pages/__func__/pred_nonsampling.pkl")
-
-# XGBoost 모델을 XGBClassifier로 래핑하여 불러오기
 model_total = joblib.load('a/pages/__func__/pred.pkl')
-model_total = xgb.XGBClassifier()
-model_total.load_model('a/pages/__func__/pred.pkl')
-
-model_nonsampling = joblib.load('a/pages/__func__/pred_nonsampling.pkl')
-model_nonsampling = xgb.XGBClassifier()
-model_nonsampling.load_model('a/pages/__func__/pred_nonsampling.pkl')
-
+model_nonsampling = joblib.load("a/pages/__func__/pred_nonsampling.pkl")
 
 # CSV 파일에서 데이터 로드
 X = pd.read_csv('a/pages/__func__/X.csv')
@@ -140,15 +128,12 @@ with con1:
                     plot_roc_curve(y_test, y_proba)
 
                 # 우측 컬럼에 Learning Curve 배치
-                # with col4:
-                #     with st.spinner("샘플링 안한 xgboost 모델의 성능을 계산하는 중..."):
-                #         plot_learning_curve_accuracy(model, X_train, y_train)
-                # 학습 곡선 그리기
                 with col4:
-                    with st.spinner("최종 모델의 성능을 계산하는 중..."):
-                        plot_learning_curve_accuracy(XGBClassifier(), X_train, y_train)  # XGBClassifier 사용
+                    with st.spinner("샘플링 안한 xgboost 모델의 성능을 계산하는 중..."):
+                        plot_learning_curve_accuracy(model, X_train, y_train)
 
 
+            
             #다시 소개 페이지로 돌아가는 버튼
             if st.button("돌아가기"):
                 st.session_state.current_page = 'intro'
