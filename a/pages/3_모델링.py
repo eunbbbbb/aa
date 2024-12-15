@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import plotly.express as px
 import joblib
-import numpy as np
 from pages.__func__.function import split_and_convert_data, get_clf_eval, plot_roc_curve, plot_learning_curve_accuracy, confusion
 
 
